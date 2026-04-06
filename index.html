@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Activity Tracker</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe4ec, #ffd6e7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #fff0f6;
+            padding: 25px;
+            border-radius: 20px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            color: #ff4da6;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border: 1px solid #ffc1da;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff66b2;
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.3);
+        }
+
+        button {
+            background: #ff66b2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff3385;
+            transform: scale(1.05);
+        }
+
+        #total {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #cc0066;
+        }
+
+        ol {
+            text-align: left;
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        li {
+            background: #ffe6f0;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 10px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🌸 Daily Activity Tracker</h2>
+
+    <input type="text" id="aktivitas" placeholder="contoh: belajar, olahraga">
+    <input type="number" id="durasi" placeholder="Durasi (menit)">
+    <button id="tambah">Tambah 💕</button>
+
+    <p id="total">Total: 0 menit (0 aktivitas)</p>
+
+    <ol id="list"></ol>
+</div>
+
+<script>
+    // Ambil 5 objek DOM (sesuai PDF)
+    const inputAktivitas = document.getElementById("aktivitas");
+    const inputDurasi = document.getElementById("durasi");
+    const btnTambah = document.getElementById("tambah");
+    const list = document.getElementById("list");
+    const totalText = document.getElementById("total");
+
+    let totalMenit = 0;
+    let jumlahAktivitas = 0;
+
+    btnTambah.addEventListener("click", function () {
+        const aktivitas = inputAktivitas.value;
+        const durasi = parseInt(inputDurasi.value);
+
+        // validasi
+        if (aktivitas === "" || isNaN(durasi)) {
+            alert("Isi aktivitas dan durasi dengan benar!");
+            return;
+        }
+
+        // tambah ke list
+        const li = document.createElement("li");
+        li.textContent = aktivitas + " — " + durasi + " menit";
+        list.appendChild(li);
+
+        // efek lucu kecil
+        li.style.transform = "scale(0.9)";
+        setTimeout(() => {
+            li.style.transform = "scale(1)";
+        }, 100);
+
+        // update data
+        totalMenit += durasi;
+        jumlahAktivitas++;
+
+        // update tampilan (DOM)
+        totalText.textContent =
+            "Total: " + totalMenit + " menit (" + jumlahAktivitas + " aktivitas)";
+
+        // reset input
+        inputAktivitas.value = "";
+        inputDurasi.value = "";
+    });
+</script>
+
+</body>
+</html>
